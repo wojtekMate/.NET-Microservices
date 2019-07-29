@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/wojtek/Pulpit/Distributed .NET Core/Mikro/Mikro.Messages/Mikro.Messages.csproj": {}
+  },
+  "projects": {
+    "/home/wojtek/Pulpit/Distributed .NET Core/Mikro/Mikro.Messages/Mikro.Messages.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/wojtek/Pulpit/Distributed .NET Core/Mikro/Mikro.Messages/Mikro.Messages.csproj",
+        "projectName": "Mikro.Messages",
+        "projectPath": "/home/wojtek/Pulpit/Distributed .NET Core/Mikro/Mikro.Messages/Mikro.Messages.csproj",
+        "packagesPath": "/home/wojtek/.nuget/packages/",
+        "outputPath": "/home/wojtek/Pulpit/Distributed .NET Core/Mikro/Mikro.Messages/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/wojtek/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
