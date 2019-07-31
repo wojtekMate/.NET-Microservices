@@ -11,9 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RawRabbit;
-using RawRabbit.DependencyInjection.ServiceCollection;
 using RawRabbit.Instantiation;
-using RawRabbit.vNext;
+
 
 namespace Mikro.Api
 {
@@ -33,12 +32,25 @@ namespace Mikro.Api
 
             /* var builder = new ConfigurationBuilder().AddConfiguration(Configuration);
             services.AddRawRabbit(cfg =>cfg.AddJsonFile("rawrabbit.json")); */
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+
+            /* services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var options = new RawRabbitOptions();
             var section = Configuration.GetSection("rabbitmq");
             section.Bind(options);
             
             services.AddRawRabbit(options);
+            var service = new ServiceCollection()
+            .AddRawRabbit<CustomContext>()
+            .BuildServiceProvider();
+            var client = service.GetService<IBusClient<CustomContext>>(); */
+
+
+            var options = new RawRabbitOptions();
+            var section = Configuration.GetSection("rabbitmq");
+            section.Bind(options);
+            var client = RawRabbitFactory.CreateSingleton(options);
+            services.AddSingleton<IBusClient>(_ => client);
 
         }
 

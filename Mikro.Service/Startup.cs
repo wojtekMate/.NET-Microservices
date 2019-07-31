@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using RawRabbit.DependencyInjection.ServiceCollection;
+using RawRabbit;
 using RawRabbit.Instantiation;
 
 namespace Mikro.Service
@@ -28,11 +28,21 @@ namespace Mikro.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            var options = new RawRabbitOptions();
+            /* var options = new RawRabbitOptions();
             var section = Configuration.GetSection("rabbitmq");
             section.Bind(options);
             
-            services.AddRawRabbit(options);
+            services.AddRawRabbit(options);  */
+
+
+
+            var options = new RawRabbitOptions();
+            var section = Configuration.GetSection("rabbitmq");
+            section.Bind(options);
+
+
+            var client = RawRabbitFactory.CreateSingleton(options);
+            services.AddSingleton<IBusClient>(_ => client);
 
         }
 
