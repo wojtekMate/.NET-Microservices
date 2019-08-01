@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Mikro.Messages.Commands;
 using RawRabbit;
 using RawRabbit.Instantiation;
 
@@ -61,6 +62,15 @@ namespace Mikro.Service
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            ConfigureRabbitMqSubscriptions(app);
+        }
+
+        private void ConfigureRabbitMqSubscriptions(IApplicationBuilder app)
+        {
+            IBusClient client = app.ApplicationServices.GetService<IBusClient>();
+            var handler = app.ApplicationServices.GetService<ICommandHandler<CalculateValueCommand>>();
+            client.SubscribeAsync<CalculateValueCommand>(msg => handler.HandleAsync(msg));
+
         }
     }
 }

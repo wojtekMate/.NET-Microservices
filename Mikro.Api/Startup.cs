@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Mikro.Api.Repositories;
+using Mikro.Messages.Events;
 using RawRabbit;
 using RawRabbit.Instantiation;
 
@@ -51,6 +53,7 @@ namespace Mikro.Api
             section.Bind(options);
             var client = RawRabbitFactory.CreateSingleton(options);
             services.AddSingleton<IBusClient>(_ => client);
+            services.AddScoped<IRepository,InMemoryRepository>();
 
         }
 
@@ -70,6 +73,15 @@ namespace Mikro.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            ConfigureRabbitMqSubscriptions(app);
+        }
+
+        private void ConfigureRabbitMqSubscriptions(IApplicationBuilder app)
+        {
+            IBusClient client = app.ApplicationServices.GetService<IBusClient>();
+            var handler = app.ApplicationServices.GetService<IEventHandler<ValueCalculatedEvent>>();
+            client.SubscribeAsync<ValueCalculatedEvent>(msg => handler.HandleAsync(msg));
+
         }
     }
 }
