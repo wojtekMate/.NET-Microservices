@@ -53,7 +53,8 @@ namespace Mikro.Api
             section.Bind(options);
             var client = RawRabbitFactory.CreateSingleton(options);
             services.AddSingleton<IBusClient>(_ => client);
-            services.AddScoped<IRepository,InMemoryRepository>();
+            services.AddSingleton<IRepository,InMemoryRepository>();
+            services.AddTransient<IEventHandler<ValueCalculatedEvent>, ValueCalculatedHandler>();
 
         }
 

@@ -29,6 +29,9 @@ namespace Mikro.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<ICalculate,Calculate>();
+            services.AddTransient<ICommandHandler<CalculateValueCommand>, CalculateValueHandler>();
+
             /* var options = new RawRabbitOptions();
             var section = Configuration.GetSection("rabbitmq");
             section.Bind(options);
